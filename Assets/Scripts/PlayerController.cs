@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-
 // Include the namespace required to use Unity UI
 using UnityEngine.UI;
-
+using UnityEngine.Events;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
@@ -11,6 +10,8 @@ public class PlayerController : MonoBehaviour {
 	public float speed;
 	public Text countText;
 	public Text winText;
+
+	public UnityEvent playerEvt;
 
 	// Create private references to the rigidbody component on the player, and the count of pick up objects picked up so far
 	private Rigidbody rb;
@@ -65,8 +66,14 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	// Create a standalone function that can update the 'countText' UI and check if the required amount to win has been achieved
-	void SetCountText()
+    private void OnCollisionEnter(Collision collision)
+    {
+		GameObject go = collision.gameObject;
+
+		Debug.Log("Collided with" + go.name);
+    }
+    // Create a standalone function that can update the 'countText' UI and check if the required amount to win has been achieved
+    void SetCountText()
 	{
 		// Update the text field of our 'countText' variable
 		countText.text = "Count: " + count.ToString ();
